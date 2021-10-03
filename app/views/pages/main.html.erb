@@ -1,0 +1,24 @@
+<div id="center">
+  <div id="main-form">
+    <div class="main-form-text" id="first">
+      Remind Me When
+    </div>
+    
+    <div id="country-destination-select">
+      <%= render "country" %>
+    </div>
+    
+    <div class="main-form-text">Opens For Tourism For</div>
+    
+    <div id="country-citizen-select">
+      <%= render "country" %>
+    </div>
+    
+    <div class="main-form-text">Citizens</div>
+    
+    <div style="margin-top: 20px;">
+      <a onclick="requestPermission()" href="javascript:void(0)" id="subscribe-button">Subscribe</a>
+    </div>
+    <div id="token"></div>
+  </div>
+</div>
