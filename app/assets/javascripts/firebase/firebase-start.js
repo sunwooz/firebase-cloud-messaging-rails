@@ -1,6 +1,6 @@
 // [START get_messaging_object]
 // Retrieve Firebase Messaging object.
-const messaging = firebase.messaging();
+var messaging = firebase.messaging();
 // [END get_messaging_object]
 // [START set_public_vapid_key]
 // Add the public key generated from the console here.
