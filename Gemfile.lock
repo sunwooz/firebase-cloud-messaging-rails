@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/sunwooz/serviceworker-rails
+  revision: 090f0492a296543b8915d7dfca939b402920f414
+  specs:
+    serviceworker-rails (0.6.0)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -181,8 +188,6 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    serviceworker-rails (0.6.0)
-      railties (>= 3.1)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -234,7 +239,7 @@ DEPENDENCIES
   rails (~> 5.2.2)
   sass-rails (~> 5.0)
   selenium-webdriver
-  serviceworker-rails
+  serviceworker-rails!
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

@@ -36,7 +36,7 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'serviceworker-rails'
+gem 'serviceworker-rails', git: "https://github.com/sunwooz/serviceworker-rails"
 gem 'fcm'
 gem 'pry'
 
