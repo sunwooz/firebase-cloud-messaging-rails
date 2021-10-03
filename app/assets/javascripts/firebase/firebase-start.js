@@ -14,6 +14,7 @@ const permissionDivId = 'permission_div';
 // [START refresh_token]
 // Callback fired if Instance ID token is updated.
 messaging.onTokenRefresh(function() {
+    debugger
     messaging.getToken().then(function(refreshedToken) {
         console.log('Token refreshed.');
         // Indicate that the new Instance ID token has not yet been sent to the
@@ -25,6 +26,7 @@ messaging.onTokenRefresh(function() {
         // Display new Instance ID token and clear UI of all previous messages.
         resetUI();
         // [END_EXCLUDE]
+        debugger
     }).catch(function(err) {
         console.log('Unable to retrieve refreshed token ', err);
         showToken('Unable to retrieve refreshed token ', err);
@@ -47,7 +49,7 @@ messaging.onMessage(function(payload) {
 // [END receive_message]
 
 function resetUI() {
-    clearMessages();
+    // clearMessages();
     showToken('loading...');
     // [START get_token]
     // Get Instance ID token. Initially this makes a network call, once retrieved
@@ -56,6 +58,33 @@ function resetUI() {
         if (currentToken) {
             sendTokenToServer(currentToken);
             updateUIForPushEnabled(currentToken);
+            
+            var country_citizen = document.getElementById('country-citizen-select').children[0].value
+            var country_destination = document.getElementById('country-destination-select').children[0].value
+            var token = document.getElementsByName('csrf-token')[0].content
+            console.log(country_citizen)
+            console.log(country_destination)
+            
+            fetch('/subscriptions/create.json', {
+              method: 'post',
+              body: JSON.stringify({
+                "country_citizen": country_citizen, 
+                country_destination: country_destination, 
+                user_token: currentToken
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': token
+              },
+              credentials: 'same-origin'
+            }).then(function(response) {
+              console.log(response)
+              debugger
+              return response.json();
+            }).then(function(data) {
+              debugger
+              console.log(data);
+            });
         } else {
             // Show permission request.
             console.log('No Instance ID token available. Request permission to generate one.');
@@ -75,7 +104,7 @@ function resetUI() {
 function showToken(currentToken) {
     // Show token in console and UI.
     var tokenElement = document.querySelector('#token');
-    tokenElement.textContent = currentToken;
+    // tokenElement.textContent = currentToken;
 }
 
 // Send the Instance ID token your application server, so that it can:
@@ -101,16 +130,17 @@ function setTokenSentToServer(sent) {
     window.localStorage.setItem('sentToServer', sent ? '1' : '0');
 }
 
-function showHideDiv(divId, show) {
-    const div = document.querySelector('#' + divId);
-    if (show) {
-        div.style = 'display: visible';
-    } else {
-        div.style = 'display: none';
-    }
-}
+// function showHideDiv(divId, show) {
+//     const div = document.querySelector('#' + divId);
+//     if (show) {
+//         div.style = 'display: visible';
+//     } else {
+//         div.style = 'display: none';
+//     }
+// }
 
 function requestPermission() {
+    debugger
     console.log('Requesting permission...');
     // [START request_permission]
     messaging.requestPermission().then(function() {
@@ -155,29 +185,29 @@ function appendMessage(payload) {
     const dataHeaderELement = document.createElement('h5');
     const dataElement = document.createElement('pre');
     dataElement.style = 'overflow-x:hidden;';
-    dataHeaderELement.textContent = 'Received message:';
-    dataElement.textContent = JSON.stringify(payload, null, 2);
+    // dataHeaderELement.textContent = 'Received message:';
+    // dataElement.textContent = JSON.stringify(payload, null, 2);
     messagesElement.appendChild(dataHeaderELement);
     messagesElement.appendChild(dataElement);
 }
 
 // Clear the messages element of all children.
-function clearMessages() {
-    const messagesElement = document.querySelector('#messages');
-    while (messagesElement.hasChildNodes()) {
-        messagesElement.removeChild(messagesElement.lastChild);
-    }
-}
+// function clearMessages() {
+//     const messagesElement = document.querySelector('#messages');
+//     while (messagesElement.hasChildNodes()) {
+//         messagesElement.removeChild(messagesElement.lastChild);
+//     }
+// }
 
 function updateUIForPushEnabled(currentToken) {
-    showHideDiv(tokenDivId, true);
-    showHideDiv(permissionDivId, false);
+    // showHideDiv(tokenDivId, true);
+    // showHideDiv(permissionDivId, false);
     showToken(currentToken);
 }
 
 function updateUIForPushPermissionRequired() {
-    showHideDiv(tokenDivId, false);
-    showHideDiv(permissionDivId, true);
+    // showHideDiv(tokenDivId, false);
+    // showHideDiv(permissionDivId, true);
 }
 
 resetUI();

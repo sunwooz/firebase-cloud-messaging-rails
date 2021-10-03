@@ -1,0 +1,42 @@
+<script>
+  document.addEventListener('click', function(e) {
+    var token = document.getElementsByName('csrf-token')[0].content
+    debugger
+    var title = document.getElementById('message-title').value
+    var description = document.getElementById('message-description').value
+    if (e.target.id == 'submit-test-message') {
+      debugger
+      fetch('/subscriptions/send.json', {
+        method: 'post',
+        body: JSON.stringify({
+          "title": title, 
+          "description": description,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': token
+        },
+        credentials: 'same-origin'
+      }).then(function(response) {
+        debugger
+        return response.json();
+      }).then(function(data) {
+        debugger
+        console.log(data);
+      });
+    }
+  })
+</script>
+<br><br><br><br><br><br><br><br><br>
+<h1>Test Message Send</h1>
+<label for="message-title">Title</label><br>
+<input type="text" name="message-title" id="message-title"><br>
+<label for="message-description">Description</label><br>
+<input type="text" name="message-description" id="message-description"><br>
+<div id="submit-test-message">Submit</div>
+
+<ul>
+<% @tokens.each do |token| %>
+  <li><%= token %></li>
+<% end %>
+</ul>
